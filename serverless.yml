@@ -4,10 +4,11 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
+  region: eu-west-2
 
 functions:
-  hello:
-    handler: handler.hello
+  addTodo:
+    handler: src/handler/addTodo.handler
     events:
       - httpApi:
           path: /

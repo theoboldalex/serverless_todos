@@ -1,11 +1,11 @@
 "use strict";
 
-module.exports.hello = async (event) => {
+const addTodo = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: "Go Serverless v3.0! Your function executed successfully!",
+        message: "Hello, World!",
         input: event,
       },
       null,
@@ -13,3 +13,7 @@ module.exports.hello = async (event) => {
     ),
   };
 };
+
+module.exports = {
+    handler: addTodo
+}
