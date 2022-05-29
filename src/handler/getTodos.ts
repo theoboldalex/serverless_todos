@@ -3,8 +3,9 @@
 import { Todo } from '../interfaces/todo';
 
 const mockTodos: Array<Todo> = [
-    {id: 1, item: 'wash car'},
-    {id: 2, item: 'write lambda'}
+    {id: '1', item: 'learn typescript'},
+    {id: '2', item: 'write lambda'},
+    {id: '3', item: 'profit'}
 ]
 
 const getTodos = async (event) => {
@@ -14,10 +15,8 @@ const getTodos = async (event) => {
       {
         message: mockTodos,
         input: event,
-      },
-      null,
-      2
-    ),
+      }
+    )
   }
 }
 
