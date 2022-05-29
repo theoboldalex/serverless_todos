@@ -6,6 +6,9 @@ provider:
   runtime: nodejs14.x
   region: eu-west-2
 
+plugins:
+  - serverless-plugin-typescript
+
 functions:
   addTodo:
     handler: src/handler/addTodo.handler

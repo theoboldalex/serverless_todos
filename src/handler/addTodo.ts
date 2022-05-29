@@ -1,11 +1,12 @@
 "use strict";
 
 const addTodo = async (event) => {
+  const name: string = 'Alex'
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: "Hello, World!",
+        message: `Hello, ${name}!`,
         input: event,
       },
       null,
