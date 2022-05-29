@@ -14,5 +14,11 @@ functions:
     handler: src/handler/addTodo.handler
     events:
       - httpApi:
+          path: /add-todo
+          method: get
+  getTodos:
+    handler: src/handler/getTodos.handler
+    events:
+      - httpApi:
           path: /
           method: get
