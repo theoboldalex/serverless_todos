@@ -1,9 +1,6 @@
 "use strict";
 
-interface Todo {
-    id: number,
-    item: string
-}
+import { Todo } from '../interfaces/todo';
 
 const mockTodos: Array<Todo> = [
     {id: 1, item: 'wash car'},
@@ -21,8 +18,8 @@ const getTodos = async (event) => {
       null,
       2
     ),
-  };
-};
+  }
+}
 
 module.exports = {
     handler: getTodos

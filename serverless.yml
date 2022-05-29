@@ -15,7 +15,7 @@ functions:
     events:
       - httpApi:
           path: /add-todo
-          method: get
+          method: post
   getTodos:
     handler: src/handler/getTodos.handler
     events:
