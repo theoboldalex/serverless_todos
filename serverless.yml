@@ -28,6 +28,12 @@ functions:
       - httpApi:
           path: /
           method: get
+  getTodoById:
+    handler: src/handler/getTodoById.ts
+    events:
+      - httpApi:
+          path: /{todoId}
+          method: get
 
 resources:
   Resources:
