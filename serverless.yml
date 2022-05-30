@@ -29,7 +29,7 @@ functions:
           path: /
           method: get
   getTodoById:
-    handler: src/handler/getTodoById.ts
+    handler: src/handler/getTodoById.handler
     events:
       - httpApi:
           path: /{todoId}
