@@ -5,6 +5,12 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: eu-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:eu-west-2:927919045379:table/todosTable
 
 plugins:
   - serverless-plugin-typescript
@@ -22,3 +28,18 @@ functions:
       - httpApi:
           path: /
           method: get
+
+resources:
+  Resources:
+    todosTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: todosTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+

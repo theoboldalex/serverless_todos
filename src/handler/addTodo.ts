@@ -5,28 +5,33 @@ import {v4 as uuidv4} from 'uuid';
 import * as AWS from 'aws-sdk';
 
 const addTodo = async (event) => {
-  const id: string = uuidv4()
-  const { item }: { item: string } = JSON.parse(event.body)
+    const id: string = uuidv4()
+    const { item }: { item: string } = JSON.parse(event.body)
 
-  const todo: Todo = {
-      id,
-      item
-  }
-  
-  const dynamoDB = new AWS.DynamoDB.DocumentClient()
+    const todo: Todo = {
+        id,
+        item
+    }
 
-  // TODO: implement dynamo table put with todo data once table configured
-  // dynamoDB.put()
+    const dynamoDB = new AWS.DynamoDB.DocumentClient()
 
-  return {
-    statusCode: 201,
-    body: JSON.stringify(
-      {
-        message: `${todo.item} has been added to your list with id: ${todo.id}`,
-        input: event,
-      }
-    )
-  }
+    try {
+        await dynamoDB.put({
+            TableName: 'todosTable',
+            Item: todo
+        }).promise()
+
+        return {
+            statusCode: 201,
+            body: JSON.stringify(todo)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            statusCode: 400,
+            body: JSON.stringify({'message': 'request failed'})
+        }
+    }
 }
 
 module.exports = {
