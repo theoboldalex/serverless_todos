@@ -5,6 +5,12 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: eu-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:eu-west-2:927919045379:table/todosTable
 
 plugins:
   - serverless-plugin-typescript
