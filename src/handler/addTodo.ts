@@ -15,8 +15,10 @@ const addTodo = async (event) => {
   
   const dynamoDB = new AWS.DynamoDB.DocumentClient()
 
-  // TODO: implement dynamo table put with todo data once table configured
-  // dynamoDB.put()
+  dynamoDB.put({
+    TableName: 'todosTable',
+    Item: todo
+  })
 
   return {
     statusCode: 201,
