@@ -40,6 +40,12 @@ functions:
       - httpApi:
           path: /{todoId}
           method: delete
+  updateTodoById:
+    handler: src/handler/updateTodoById.handler
+    events:
+      - httpApi:
+          path: /{todoId}
+          method: put
 
 resources:
   Resources:
