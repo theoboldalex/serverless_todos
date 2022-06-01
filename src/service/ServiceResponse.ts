@@ -14,6 +14,7 @@ class ServiceResponse implements IServiceResponse {
         this.message = message
     }
 }
- module.exports = {
-     ServiceResponse
- }
+
+module.exports = {
+    ServiceResponse
+}
