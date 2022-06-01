@@ -1,6 +1,7 @@
 "use strict"
 
 import * as AWS from 'aws-sdk'
+import ServiceResponse from '../service/ServiceResponse'
 
 const deleteTodoById = async (event) => {
     const dynamoDB = new AWS.DynamoDB.DocumentClient()
@@ -14,16 +15,22 @@ const deleteTodoById = async (event) => {
            }
        }).promise()
 
-       return {
-           statusCode: 204,
-           body: null
-       }
+       const res = new ServiceResponse(
+           204,
+           null
+       )
+
+       return res.getResponse()
     } catch (error) {
        console.log(error) 
-       return {
-           statusCode: 400,
-           body: JSON.stringify(error)
-       }
+       const res = new ServiceResponse(
+           error.statusCode,
+           null,
+           false,
+           error.message
+       )
+
+       return res.getResponse()
     }
 }
 

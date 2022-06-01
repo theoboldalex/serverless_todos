@@ -1,6 +1,7 @@
 "use strict";
 
-import * as AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk'
+import ServiceResponse from '../service/ServiceResponse'
 
 const getTodos = async (event) => {
     const dynamoDB = new AWS.DynamoDB.DocumentClient()
@@ -10,16 +11,21 @@ const getTodos = async (event) => {
            TableName: 'todosTable'
        }).promise() 
 
-       return {
-           statusCode: 200,
-           body: JSON.stringify(data.Items)
-       }
+       const res = new ServiceResponse(
+           200,
+           data.Items,
+       )
+
+       return res.getResponse()
     } catch (error) {
        console.log(error) 
-       return {
-           statusCode: 400,
-           body: JSON.stringify(error)
-       }
+       const res = new ServiceResponse(
+           error.statusCode,
+           null,
+           false,
+           error.message
+       )
+       return res.getResponse()
     }
 }
 

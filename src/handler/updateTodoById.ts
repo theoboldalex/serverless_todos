@@ -1,6 +1,7 @@
 "use strict"
 
 import * as AWS from 'aws-sdk'
+import ServiceResponse from '../service/ServiceResponse'
 
 const updateTodoById = async (event) => {
     const dynamoDB = new AWS.DynamoDB.DocumentClient()
@@ -22,15 +23,22 @@ const updateTodoById = async (event) => {
             }
         }).promise()
 
-        return {
-            statusCode: 204,
-        }
+        const res = new ServiceResponse(
+            204,
+            null
+        )
+
+        return res.getResponse()
     } catch (error) {
        console.log(error)
-       return {
-           statusCode: 400,
-           body: JSON.stringify(error)
-       }
+       const res = new ServiceResponse(
+           error.statusCode,
+           null,
+           false,
+           error.message
+       )
+
+       return res.getResponse()
     }
 }
 

@@ -1,8 +1,9 @@
 "use strict";
 
-import { Todo } from '../interfaces/todo'
-import {v4 as uuidv4} from 'uuid';
-import * as AWS from 'aws-sdk';
+import Todo from '../interfaces/todo'
+import {v4 as uuidv4} from 'uuid'
+import * as AWS from 'aws-sdk'
+import ServiceResponse from '../service/ServiceResponse';
 
 const addTodo = async (event) => {
     const id: string = uuidv4()
@@ -21,16 +22,22 @@ const addTodo = async (event) => {
             Item: todo
         }).promise()
 
-        return {
-            statusCode: 201,
-            body: JSON.stringify(todo)
-        }
+        const res = new ServiceResponse(
+            201,
+            todo
+        )
+
+        return res.getResponse()
     } catch (error) {
         console.log(error)
-        return {
-            statusCode: 400,
-            body: JSON.stringify({'message': 'request failed'})
-        }
+        const res = new ServiceResponse(
+            error.statusCode,
+            null,
+            false,
+            error.message
+        )
+
+        return res.getResponse()
     }
 }
 
