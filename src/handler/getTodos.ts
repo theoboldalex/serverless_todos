@@ -9,7 +9,7 @@ const getTodos = async (event) => {
 
     try {
        const data = await dynamoDB.scan({
-           TableName: 'todoTable'
+           TableName: 'todosTable'
        }).promise() 
 
        res.data = data.Items
