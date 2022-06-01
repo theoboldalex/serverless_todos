@@ -1,6 +1,6 @@
-import { Todo } from './todo'
+import Todo from './todo'
 
-export interface ServiceResponse {
+export default interface IServiceResponse {
     statusCode: number,
     data: Array<Todo>,
     success: boolean,

@@ -1,8 +1,8 @@
 "use strict";
 
-import { Todo } from '../interfaces/todo'
-import {v4 as uuidv4} from 'uuid';
-import * as AWS from 'aws-sdk';
+import Todo from '../interfaces/todo'
+import {v4 as uuidv4} from 'uuid'
+import * as AWS from 'aws-sdk'
 
 const addTodo = async (event) => {
     const id: string = uuidv4()

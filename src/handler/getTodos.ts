@@ -1,6 +1,6 @@
 "use strict";
 
-import * as AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk'
 
 const getTodos = async (event) => {
     const dynamoDB = new AWS.DynamoDB.DocumentClient()
