@@ -7,6 +7,7 @@ const updateTodoById = async (event) => {
     const dynamoDB = new AWS.DynamoDB.DocumentClient()
     const todoId = event.pathParameters.todoId
     const { item } = JSON.parse(event.body)
+    const res = new ServiceResponse()
 
     try {
         await dynamoDB.update({
@@ -23,23 +24,15 @@ const updateTodoById = async (event) => {
             }
         }).promise()
 
-        const res = new ServiceResponse(
-            204,
-            null
-        )
-
-        return res.getResponse()
+        res.statusCode = 204
     } catch (error) {
-       console.log(error)
-       const res = new ServiceResponse(
-           error.statusCode,
-           null,
-           false,
-           error.message
-       )
-
-       return res.getResponse()
+        console.log(error)
+        res.statusCode = error.statusCode
+        res.success = false
+        res.message = error.message
     }
+
+    return res.getResponse()
 }
 
 module.exports = {
