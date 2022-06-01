@@ -2,7 +2,7 @@ import Todo from './todo'
 
 export default interface IServiceResponse {
     statusCode: number,
-    data: Array<Todo>,
+    data: any,
     success: boolean,
     message?: string
 }
