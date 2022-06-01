@@ -19,10 +19,23 @@ const getTodoById = async (event) => {
            }
        }).promise() 
 
+       if (!data.Count) {
+           const res = new ServiceResponse(
+               404,
+               null,
+               false,
+               `No records found matching id ${todoId}`
+           )
+
+           return res.getResponse()
+       }
+
        const res = new ServiceResponse(
            200,
            data.Items
        )
+
+       return res.getResponse()
     } catch (error) {
        console.log(error)
        const res = new ServiceResponse(
