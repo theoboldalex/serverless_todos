@@ -8,13 +8,13 @@ import ServiceResponse from '../service/ServiceResponse';
 const addTodo = async (event) => {
     const id: string = uuidv4()
     const { item }: { item: string } = JSON.parse(event.body)
+    const res = new ServiceResponse()
+    const dynamoDB = new AWS.DynamoDB.DocumentClient()
 
     const todo: Todo = {
         id,
         item
     }
-
-    const dynamoDB = new AWS.DynamoDB.DocumentClient()
 
     try {
         await dynamoDB.put({
@@ -22,23 +22,16 @@ const addTodo = async (event) => {
             Item: todo
         }).promise()
 
-        const res = new ServiceResponse(
-            201,
-            todo
-        )
-
-        return res.getResponse()
+        res.statusCode = 201
+        res.data = todo
     } catch (error) {
         console.log(error)
-        const res = new ServiceResponse(
-            error.statusCode,
-            null,
-            false,
-            error.message
-        )
-
-        return res.getResponse()
+        res.statusCode = error.statusCode
+        res.success = false
+        res.message = error.message
     }
+
+    return res.getResponse()
 }
 
 module.exports = {

@@ -6,47 +6,37 @@ import ServiceResponse from '../service/ServiceResponse'
 const getTodoById = async (event) => {
     const todoId = event.pathParameters.todoId
     const dynamoDB = new AWS.DynamoDB.DocumentClient()
+    const res = new ServiceResponse()
 
     try {
-       const data = await dynamoDB.scan({
-           TableName: 'todosTable',
-           FilterExpression: '#todoId = :todoId',
-           ExpressionAttributeNames: {
-               '#todoId': 'id'
-           },
-           ExpressionAttributeValues: {
-               ':todoId': todoId
-           }
-       }).promise() 
+        const data = await dynamoDB.scan({
+            TableName: 'todosTable',
+            FilterExpression: '#todoId = :todoId',
+            ExpressionAttributeNames: {
+                '#todoId': 'id'
+            },
+            ExpressionAttributeValues: {
+                ':todoId': todoId
+            }
+        }).promise() 
 
-       if (!data.Count) {
-           const res = new ServiceResponse(
-               404,
-               null,
-               false,
-               `No records found matching id ${todoId}`
-           )
+        if (!data.Count) {
+            res.statusCode = 404
+            res.success = false
+            res.message = `No records found matching id ${todoId}`
 
-           return res.getResponse()
-       }
+            return res.getResponse()
+        }
 
-       const res = new ServiceResponse(
-           200,
-           data.Items
-       )
-
-       return res.getResponse()
+        res.data = data.Items
     } catch (error) {
-       console.log(error)
-       const res = new ServiceResponse(
-           error.statusCode,
-           null,
-           false,
-           error.message
-       )
-
-       return res.getResponse()
+        console.log(error)
+        res.statusCode = error.statusCode
+        res.success = false
+        res.message = error.message
     }
+
+    return res.getResponse()
 }
 
 module.exports = {

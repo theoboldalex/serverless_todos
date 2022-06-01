@@ -6,7 +6,7 @@ export default class ServiceResponse implements IServiceResponse {
     public success: boolean
     public message?: string
 
-    constructor(statusCode: number, data, success = true, message = '') {
+    constructor(statusCode: number = 200, data = null, success = true, message = '') {
         this.statusCode = statusCode
         this.data = data
         this.success = success
