@@ -1,6 +1,7 @@
 "use strict"
 
 import * as AWS from 'aws-sdk'
+import ServiceResponse from '../service/ServiceResponse'
 
 const getTodoById = async (event) => {
     const todoId = event.pathParameters.todoId
@@ -18,16 +19,20 @@ const getTodoById = async (event) => {
            }
        }).promise() 
 
-       return {
-           statusCode: 200,
-           body: JSON.stringify(data.Items)
-       }
+       const res = new ServiceResponse(
+           200,
+           data.Items
+       )
     } catch (error) {
        console.log(error)
-       return {
-           statusCode: 400,
-           body: JSON.stringify(error)
-       }
+       const res = new ServiceResponse(
+           error.statusCode,
+           null,
+           false,
+           error.message
+       )
+
+       return res.getResponse()
     }
 }
 

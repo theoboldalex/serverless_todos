@@ -27,7 +27,7 @@ const addTodo = async (event) => {
             todo
         )
 
-        retrun res.getResponse()
+        return res.getResponse()
     } catch (error) {
         console.log(error)
         const res = new ServiceResponse(
